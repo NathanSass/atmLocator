@@ -2,16 +2,16 @@
 	var app = angular.module('findAtm', []);
 	
 
-	app.controller('AppController', ['$scope', '$http', function($scope, $http){
-		$scope.lat = "0";
-    $scope.lng = "0";
-		$scope.googleMap = undefined;
-		$scope.atmData = [];
+	app.controller('AppController', ['$http', function($http){
+		this.lat = "0";
+    this.lng = "0";
+		this.googleMap = undefined;
+		this.atmData = [];
 		this.coolData = [];
-		$scope.error = "";
-		var atm = this;
+		this.error = "";
+		var CoolApp = this;
 
-		$scope.mapOptions = function(currentLocation){
+		this.mapOptions = function(currentLocation){
 			return{
 	      center: currentLocation,
 	      zoom: 15,
@@ -19,39 +19,39 @@
 			}
     };
 
-    $scope.useGeoLoc = function(position){
-			$scope.lat = position.coords.latitude;
-      $scope.lng = position.coords.longitude;
+    this.useGeoLoc = function(position){
+			CoolApp.lat = position.coords.latitude;
+      CoolApp.lng = position.coords.longitude;
     	
-    	$scope.getNearbyAtm();
-    	$scope.buildMap();
+    	CoolApp.getNearbyAtm();
+    	CoolApp.buildMap();
     	//drop a marker on current location
     };
 
-    $scope.getNearbyAtm = function(){
-    	var chaseUrl = 'https://m.chase.com/PSRWeb/location/list.action?lat=' + $scope.lat + '&lng=' + $scope.lng;
-    	$http({method: 'GET', url: chaseUrl}).success($scope.markAtms).error(function(data){console.log("We have an error")});
+    this.getNearbyAtm = function(){
+    	var chaseUrl = 'https://m.chase.com/PSRWeb/location/list.action?lat=' + CoolApp.lat + '&lng=' + CoolApp.lng;
+    	$http({method: 'GET', url: chaseUrl}).success(CoolApp.markAtms).error(function(data){console.log("We have an error")});
     };
 
-    $scope.markAtms = function(atmData){
+    this.markAtms = function(atmData){
     	///clean this up
-    	atm.coolData = atmData.locations;
-    	console.log(atm.coolData);
-    	$scope.atmData = atmData.locations;
-    	for (var i = 0; i < $scope.atmData.length; i++){
+    	CoolApp.coolData = atmData.locations;
+    	console.log(CoolApp.coolData);
+    	CoolApp.atmData = atmData.locations;
+    	for (var i = 0; i < CoolApp.atmData.length; i++){
     		var Atmlat = atmData.locations[i].lat;
     		var Atmlng = atmData.locations[i].lng;
-	    	$scope.buildMarker(Atmlat, Atmlng);
+	    	CoolApp.buildMarker(Atmlat, Atmlng);
     	}
     };
 
-    $scope.buildMarker = function(lat, lng){
+    this.buildMarker = function(lat, lng){
     	//pass in all of the atm data
     	//attach the event listener and have it link to showing toggling something on the dom
     	var atmLocation = new google.maps.LatLng(lat, lng)
     	var marker = new google.maps.Marker({
 	      position: atmLocation,
-	      map: $scope.googleMap,
+	      map: CoolApp.googleMap,
 	      title: 'Hello World!'
 		  });
 
@@ -59,28 +59,28 @@
     };
 
 		
-		$scope.buildMap = function(){
+		this.buildMap = function(){
 
-      var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
-      $scope.googleMap = new google.maps.Map(document.getElementById("map_canvas"),
-            $scope.mapOptions(latlng));
+      var latlng = new google.maps.LatLng(CoolApp.lat, CoolApp.lng);
+      CoolApp.googleMap = new google.maps.Map(document.getElementById("map_canvas"),
+            CoolApp.mapOptions(latlng));
 		};
 		
-		$scope.showError = function(error){
+		this.showError = function(error){
 			alert("There is an error: " + error)
 		};
 
-		$scope.getLocation = function(){
+		this.getLocation = function(){
 			if(navigator.geolocation){
-				navigator.geolocation.getCurrentPosition($scope.useGeoLoc, $scope.showError);
+				navigator.geolocation.getCurrentPosition(CoolApp.useGeoLoc, CoolApp.showError);
 			}else{
-				$scope.error = "This browser does not support geolocation."
-				alert($scope.error)
+				this.error = "This browser does not support geolocation."
+				alert(this.error)
 				//prompt the user for his/her city and convert to latlong
 			}
 		};
 
-		$scope.getLocation();
+		CoolApp.getLocation();
 
 
 
