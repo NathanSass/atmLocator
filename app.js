@@ -7,16 +7,21 @@
 		this.lat = "0";
     this.lng = "0";
 		this.googleMap = undefined;
-		this.atmData = [];
+		// this.atmData = [];
 		this.coolData = [];
 		this.atmId = 0;
 		this.error = "";
-		$scope.coolAtm = 0;
+		// $scope.coolAtm = 0;
 
 
 		$scope.isSet = function(atmNum){
-			return CoolApp.atmId !== atmNum
+			return CoolApp.atmId !== atmNum;
 			// return false
+		};
+
+		this.setAtmView = function(newAtm){
+			console.log(this.atmId)
+			return CoolApp.atmId = newAtm;
 		};
 
 		this.mapOptions = function(currentLocation){
@@ -44,17 +49,17 @@
     this.markAtms = function(atmData){
     	///clean this up
     	CoolApp.coolData = atmData.locations;
-    	console.log(CoolApp.coolData);
+    	// console.log(CoolApp.coolData);
     	CoolApp.atmData = atmData.locations;
     	for (var i = 0; i < CoolApp.atmData.length; i++){
     		var Atmlat = atmData.locations[i].lat;
     		var Atmlng = atmData.locations[i].lng;
-	    	CoolApp.buildMarker(Atmlat, Atmlng);
+	    	CoolApp.buildMarker(Atmlat, Atmlng, i);
     	}
     };
 
-    this.buildMarker = function(lat, lng){
-    	//pass in all of the atm data
+    this.buildMarker = function(lat, lng, index){
+    	//pass in all of the atm data()
     	//attach the event listener and have it link to showing toggling something on the dom
     	var atmLocation = new google.maps.LatLng(lat, lng)
     	var marker = new google.maps.Marker({
@@ -62,8 +67,8 @@
 	      map: CoolApp.googleMap,
 	      title: 'Hello World!'
 		  });
-
-		  google.maps.event.addListener(marker, 'click', function(){alert("hi")})
+    	// debugger
+		  google.maps.event.addListener(marker, 'click', function(){CoolApp.setAtmView(index)})
     };
 
 		
