@@ -2,14 +2,22 @@
 	var app = angular.module('findAtm', []);
 	
 
-	app.controller('AppController', ['$http', function($http){
+	app.controller('AppController', ['$http', '$scope', function($http, $scope){
+		var CoolApp = this;
 		this.lat = "0";
     this.lng = "0";
 		this.googleMap = undefined;
 		this.atmData = [];
 		this.coolData = [];
+		this.atmId = 0;
 		this.error = "";
-		var CoolApp = this;
+		$scope.coolAtm = 0;
+
+
+		$scope.isSet = function(atmNum){
+			return CoolApp.atmId !== atmNum
+			// return false
+		};
 
 		this.mapOptions = function(currentLocation){
 			return{

@@ -13,7 +13,7 @@
 		<div id="map_canvas"></div>
 		<section>
 			<div ng-repeat="atm in app.atmData">
-				<p> HI </p>
+				<div ng-hide="isSet({{$index}})"> {{$index}} </div>
 			<div>
 		</section>
 	</body>
