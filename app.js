@@ -7,21 +7,23 @@
 		this.lat = "0";
     this.lng = "0";
 		this.googleMap = undefined;
-		// this.atmData = [];
 		this.coolData = [];
 		this.atmId = 0;
 		this.error = "";
-		// $scope.coolAtm = 0;
 
 
 		$scope.isSet = function(atmNum){
+			console.log("in isSet")
+			console.log(atmNum)
 			return CoolApp.atmId !== atmNum;
+			//shows with ng-hide when this returns false
 			// return false
 		};
 
 		this.setAtmView = function(newAtm){
-			console.log(this.atmId)
-			return CoolApp.atmId = newAtm;
+			CoolApp.atmId = newAtm
+			console.log("value in setAtmView " + CoolApp.atmId);
+			return CoolApp.atmId;
 		};
 
 		this.mapOptions = function(currentLocation){
@@ -48,12 +50,13 @@
 
     this.markAtms = function(atmData){
     	///clean this up
-    	CoolApp.coolData = atmData.locations;
     	// console.log(CoolApp.coolData);
-    	CoolApp.atmData = atmData.locations;
-    	for (var i = 0; i < CoolApp.atmData.length; i++){
-    		var Atmlat = atmData.locations[i].lat;
-    		var Atmlng = atmData.locations[i].lng;
+    	CoolApp.coolData = atmData.locations; //set the value here so it is available in all of the controlller
+    	console.log(CoolApp.coolData)
+    	for (var i = 0; i < CoolApp.coolData.length; i++){
+    		// debugger
+    		var Atmlat = CoolApp.coolData[i].lat;
+    		var Atmlng = CoolApp.coolData[i].lng;
 	    	CoolApp.buildMarker(Atmlat, Atmlng, i);
     	}
     };

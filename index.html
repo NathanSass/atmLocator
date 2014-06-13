@@ -10,11 +10,20 @@
 	</head>
 	
 	<body ng-controller="AppController as app">
-		<div id="map_canvas"></div>
-		<section>
-			<div ng-repeat="atm in app.atmData">
-				<div ng-hide="isSet({{$index}})"> {{$index}} </div>
-			<div>
-		</section>
+		<div class="content-container">
+			<h1>Atm Finder</h1>
+			<div id="map_canvas" class="center"></div>
+			<section>
+				<div ng-repeat="atm in app.coolData">
+					<div ng-hide="isSet({{$index}})"> 
+					Index: {{$index}}<br>
+					Bank Type: {{atm.bank}}<br>
+					{{atm.address}}., {{atm.city}}<br>
+					{{atm.label}}<br>
+					{{atm.phone}}<br>
+					</div>
+				<div>
+			</section>
+		</div>
 	</body>
 </html>
