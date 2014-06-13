@@ -2,11 +2,14 @@
 	var app = angular.module('findAtm', []);
 	
 
-	app.controller('FindLocation', function($scope, $http){
+	app.controller('AppController', ['$scope', '$http', function($scope, $http){
 		$scope.lat = "0";
     $scope.lng = "0";
 		$scope.googleMap = undefined;
+		$scope.atmData = [];
+		this.coolData = [];
 		$scope.error = "";
+		var atm = this;
 
 		$scope.mapOptions = function(currentLocation){
 			return{
@@ -22,6 +25,7 @@
     	
     	$scope.getNearbyAtm();
     	$scope.buildMap();
+    	//drop a marker on current location
     };
 
     $scope.getNearbyAtm = function(){
@@ -30,13 +34,20 @@
     };
 
     $scope.markAtms = function(atmData){
-    	console.log(atmData)
-    	var nearbyAtms = atmData.locations
-    	for (var i = 0; i < nearbyAtms.length; i++){}
-    	$scope.dropMarker($scope.lat, $scope.lng)
+    	///clean this up
+    	atm.coolData = atmData.locations;
+    	console.log(atm.coolData);
+    	$scope.atmData = atmData.locations;
+    	for (var i = 0; i < $scope.atmData.length; i++){
+    		var Atmlat = atmData.locations[i].lat;
+    		var Atmlng = atmData.locations[i].lng;
+	    	$scope.buildMarker(Atmlat, Atmlng);
+    	}
     };
 
-    $scope.dropMarker = function(lat, lng){
+    $scope.buildMarker = function(lat, lng){
+    	//pass in all of the atm data
+    	//attach the event listener and have it link to showing toggling something on the dom
     	var atmLocation = new google.maps.LatLng(lat, lng)
     	var marker = new google.maps.Marker({
 	      position: atmLocation,
@@ -44,8 +55,8 @@
 	      title: 'Hello World!'
 		  });
 
-
-    }
+		  google.maps.event.addListener(marker, 'click', function(){alert("hi")})
+    };
 
 		
 		$scope.buildMap = function(){
@@ -53,7 +64,6 @@
       var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
       $scope.googleMap = new google.maps.Map(document.getElementById("map_canvas"),
             $scope.mapOptions(latlng));
-      //add markers here
 		};
 		
 		$scope.showError = function(error){
@@ -74,6 +84,6 @@
 
 
 
-	});
+	}]);
 
 })();

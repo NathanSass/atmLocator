@@ -8,8 +8,13 @@
 		<script type="text/javascript" src="angular.min.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 	</head>
-	<body ng-controller="FindLocation">
+	
+	<body ng-controller="AppController as app">
 		<div id="map_canvas"></div>
-		<p>{{"hello" + " " + "you"}}</p>
+		<section>
+			<div ng-repeat="atm in app.atmData">
+				<p> HI </p>
+			<div>
+		</section>
 	</body>
 </html>
