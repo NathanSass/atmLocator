@@ -11,7 +11,6 @@
 		var atmId = 0;
 		var error = "";
 		$scope.clickedMarker = false;
-		// $scope.address = "FAKE "
 
 
 
@@ -28,19 +27,13 @@
 
 
 		var setAtmView = function(newAtm){
-			// debugger
 			$scope.$apply(function(){ //The googleMaps was unbounding $scope, the $apply was needed here
 				$scope.address = coolData[newAtm].address;
 				$scope.label = coolData[newAtm].label;
-				// debugger
 				console.log($scope.address);
 				$scope.clickedMarker = true;
 				
 			})
-
-			// CoolApp.atmId = newAtm
-			// console.log("value in setAtmView " + CoolApp.atmId);
-			// return CoolApp.atmId;
 		};
 
 		var mapOptions = function(currentLocation){
@@ -66,12 +59,8 @@
     };
 
     var markAtms = function(atmData){
-    	///clean this up
-    	// console.log(CoolApp.coolData);
     	coolData = atmData.locations; //set the value here so it is available in all of the controlller
-    	// console.log(CoolApp.coolData)
     	for (var i = 0; i < coolData.length; i++){
-    		// debugger
     		var Atmlat = coolData[i].lat;
     		var Atmlng = coolData[i].lng;
 	    	buildMarker(Atmlat, Atmlng, i);
@@ -79,24 +68,20 @@
     };
 
     var buildMarker = function(lat, lng, index){
-    	//pass in all of the atm data()
-    	//attach the event listener and have it link to showing toggling something on the dom
     	var atmLocation = new google.maps.LatLng(lat, lng)
     	var marker = new google.maps.Marker({
 	      position: atmLocation,
 	      map: googleMap,
 	      title: 'Hello World!'
 		  });
-    	// debugger
 		  google.maps.event.addListener(marker, 'click', function(){setAtmView(index)})
     };
 
 		
 		var buildMap = function(){
       var latlng = new google.maps.LatLng(lat, lng);
-      googleMap = new google.maps.Map(document.getElementById("map_canvas"),
+      googleMap = new google.maps.Map(document.getElementById("map_canvas"), //defines googleMap here which is availabel to the rest of the app
             mapOptions(latlng));
-      //defines googleMap here
 		};
 		
 		var showError = function(error){
@@ -112,9 +97,5 @@
 				//prompt the user for his/her city and convert to latlong
 			}
 		}();
-
-
-
 	}]);
-
 })();
