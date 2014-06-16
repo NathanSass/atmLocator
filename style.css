@@ -1,20 +1,64 @@
 body{
-	/*background: rgb(195, 184, 230);*/
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	background: #b4b4b4;
 }
+
+h1{
+	text-align: center;
+	font-size: 6em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	color: rgb(234, 232, 232);
+}
+
+.left{
+	float: left;
+	padding-right: 3%;
+}
+
+.right{
+	float: left;
+	padding-left: 3%
+}
+
+.atm-data{
+	
+}
+
+section{
+	text-align: center;
+	color: rgb(55, 55, 55);
+	font-weight: 800;
+  margin-right: auto;
+	margin-left: auto;
+  width: 400px;
+  color: rgb(84, 83, 83);
+}
+
+section ul{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+
 .content-container{
 	max-width: 1000px;
 	margin: 0px auto;
 	text-align: center;
 }
+
 #map_canvas {
-	border-radius: 10px;
-	height: 500px;
-	width: 98%;
+	position: fixed !important;
+	bottom: 0px;
+	height: 60%;
+	width: 100%;
 }
 
 .center {
     margin-left: auto;
     margin-right: auto;
     /*width: 70%;*/
-    background-color: #b0e0e6;
 }

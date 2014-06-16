@@ -15,8 +15,6 @@
 
 
 		$scope.isSet = function(atmNum){
-			console.log("in isSet")
-			console.log(atmNum)
 			return atmId !== atmNum;
 			//shows with ng-hide when this returns false
 			// return false
@@ -27,10 +25,22 @@
 
 
 		var setAtmView = function(newAtm){
+			// debugger
+			console.log(coolData)
 			$scope.$apply(function(){ //The googleMaps was unbounding $scope, the $apply was needed here
+				
 				$scope.address = coolData[newAtm].address;
 				$scope.label = coolData[newAtm].label;
-				console.log($scope.address);
+
+				//Fields to add
+				$scope.bank = coolData[newAtm].bank
+				$scope.zip = coolData[newAtm].zip
+				$scope.phone = coolData[newAtm].phone
+				$scope.state = coolData[newAtm].state
+				$scope.zip = coolData[newAtm].zip
+				$scope.locType = coolData[newAtm].locType
+				$scope.lobbyHrs = coolData[newAtm].lobbyHrs
+				//
 				$scope.clickedMarker = true;
 				
 			})
@@ -40,7 +50,8 @@
 			return{
 	      center: currentLocation,
 	      zoom: 15,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP	
+	      mapTypeId: google.maps.MapTypeId.ROADMAP,
+	      styles: mapStyles()	
 			}
     };
 
@@ -92,10 +103,137 @@
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(useGeoLoc, showError);
 			}else{
-				this.error = "This browser does not support geolocation."
-				alert(this.error)
-				//prompt the user for his/her city and convert to latlong
+				alert("This browser does not support geolocation.")
+				//Have the user put in his/her location and convert this to a latLong object
 			}
 		}();
+
+
+		/////////STYLES BELOW
+		var mapStyles = function(){
+
+			var styles = [
+				    {
+				        "featureType": "landscape",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "lightness": 65
+				            },
+				            {
+				                "visibility": "on"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "poi",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "lightness": 51
+				            },
+				            {
+				                "visibility": "simplified"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "road.highway",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "visibility": "simplified"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "road.arterial",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "lightness": 30
+				            },
+				            {
+				                "visibility": "on"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "road.local",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "lightness": 40
+				            },
+				            {
+				                "visibility": "on"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "transit",
+				        "stylers": [
+				            {
+				                "saturation": -100
+				            },
+				            {
+				                "visibility": "simplified"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "administrative.province",
+				        "stylers": [
+				            {
+				                "visibility": "off"
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "water",
+				        "elementType": "labels",
+				        "stylers": [
+				            {
+				                "visibility": "on"
+				            },
+				            {
+				                "lightness": -25
+				            },
+				            {
+				                "saturation": -100
+				            }
+				        ]
+				    },
+				    {
+				        "featureType": "water",
+				        "elementType": "geometry",
+				        "stylers": [
+				            {
+				                "hue": "#ffff00"
+				            },
+				            {
+				                "lightness": -25
+				            },
+				            {
+				                "saturation": -97
+				            }
+				        ]
+				    }
+				];
+
+				return styles;
+			////////
+
+		}
 	}]);
 })();
