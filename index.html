@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="findAtm">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4-awEoY7R9GHH_QMH1CIYuGv94YGiNB8">
+    </script>
+		<script type="text/javascript" src="angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</head>
+	
+	<body ng-controller="AppController" class="center">
+		<!-- <div class="content-container"> -->
+			<header>
+				<h1>Atm Finder</h1>
+			</header>
+			
+
+			<section class="center" ng-show="clickedMarker">
+						<div class="left">
+							{{bank}} {{locType}}<br> 
+							{{label}}<br>
+							{{address}}., {{city}} {{zip}}<br>
+							{{phone}}<br>
+						</div>
+						<div class="right">
+							<ul>
+								<li>Monday: {{lobbyHrs[0]}}</li>
+								<li>Tuesday: {{lobbyHrs[1]}}</li>
+								<li>Wednesday: {{lobbyHrs[2]}}</li>
+								<li>Thursday: {{lobbyHrs[3]}}</li>
+								<li>Friday: {{lobbyHrs[4]}}</li>
+								<li>Saturday: {{lobbyHrs[5]}}</li>
+								<li>Sunday: {{lobbyHrs[6]}}</li>
+							</ul>
+						</div>
+			
+			</section>
+			<div id="map_canvas" class="center"></div>
+		<!-- </div> -->
+	</body>
+</html>
