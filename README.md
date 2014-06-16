@@ -1,6 +1,6 @@
 atmLocator
 ==========
-Locates Chase banks and Atms nearby
+Locates Chase banks and Atms using GeoLocation.
 
 ##Hosted on GitHub Pages [Click Here](http://nathansass.github.io/atmLocator/) 
 Build a locator for JP Morgan Chase Banks
