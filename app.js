@@ -2,49 +2,48 @@
 	var app = angular.module('findAtm', []);
 
 	app.controller('AppController', ['$http', '$scope', function($http, $scope){
-		// var CoolApp = this;
-		var lat = "0";
+		var lat = "0";         //GoogleMaps & Chase Api each need to share the variables related to location so I scoped them to the controller
     var lng = "0";
 		var googleMap = undefined;
 		var coolData = [];
 		var atmId = 0;
-		var error = "";
-		$scope.clickedMarker = false;
+		$scope.clickedMarker = false; //Program starts out by displaying no data. 
 
 
-
-		$scope.isSet = function(atmNum){
-			return atmId !== atmNum;
-			//shows with ng-hide when this returns false
-			// return false
-		};
-		$scope.testFunction = function(address){
-			$scope.address = address;
-		};
-
-
-		var setAtmView = function(newAtm){
-			// debugger
-			console.log(coolData)
-			$scope.$apply(function(){ //The googleMaps was unbounding $scope, the $apply was needed here
+		var setAtmView = function(newAtm){ // Passes the data to the selected ATM to the DOM with view-binding
+			$scope.$apply(function(){ //The googleMaps API was unbinding $scope, the $apply was needed here
+				var branchType = coolData[newAtm].locType;
+				var bankHours  = coolData[newAtm].lobbyHrs;
 				
-				$scope.address = coolData[newAtm].address;
-				$scope.label = coolData[newAtm].label;
-				// var lobbyHrs = coolData[newAtm].bank == "atm" ? createDate() : coolData[newAtm].lobbyHrs
-				//Fields to add
-				$scope.bank = coolData[newAtm].bank
-				$scope.zip = coolData[newAtm].zip
-				$scope.phone = coolData[newAtm].phone
-				$scope.state = coolData[newAtm].state
-				$scope.zip = coolData[newAtm].zip
-				$scope.locType = coolData[newAtm].locType
-				
-				$scope.lobbyHrs = coolData[newAtm].lobbyHrs;
-				
-				//
+				$scope.bankData = coolData[newAtm];
+				$scope.lobbyHrs = formatHours(branchType, bankHours); //Need to format hour data here, could have similar methods for phone numbers, capitalization, etc.
 				$scope.clickedMarker = true;
 				
 			})
+		};
+
+		var formatHours = function(branchType, atmHours){
+			var hours = Array.apply(null, Array(7));
+			
+			if(branchType === "atm"){ //atms do not provide hours of operations, but our UI needs that info.
+				hours = hours.map(function (x, i) { return "24 Hours" });
+				// hours  = ["24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours"] This is an alternative to other gymnastics. I wanted to try something new.
+			}else{
+				hours = addClosed(atmHours) //It looks better to have "closed" instead of blank values
+			}
+			return hours
+		};
+
+		var addClosed = function(atmHours){ //returns a reference of the atmHours formatted with "Closed" for the UI 
+			var withClosed = [];
+			for(var i = 0; i < atmHours.length; i++){
+				if(atmHours[i].length === 0){
+					withClosed.push("CLOSED");
+				}else{
+					withClosed.push(atmHours[i]);
+				}
+			}
+			return withClosed;
 		};
 
 		var mapOptions = function(currentLocation){
@@ -52,24 +51,22 @@
 	      center: currentLocation,
 	      zoom: 15,
 	      mapTypeId: google.maps.MapTypeId.ROADMAP,
-	      styles: mapStyles()	
+	      styles: mapStyles()	//These are my custom styles found in the huge JSON object at the bottom
 			}
     };
 
-    var useGeoLoc = function(position){
-			lat = position.coords.latitude;
+    var useGeoLoc = function(position){ //The flow branches here and the various functions execute with the geolocation info
+			lat = position.coords.latitude; //defines lat scoped to this controller
       lng = position.coords.longitude;
     	
-    	getNearbyAtm();
-    	buildMap();
-    	//drop a marker on current location
-    	// debugger
-    	markCurrentLoc();
+    	getNearbyAtm(); //Hit to Chase Api
+    	buildMap(); //Build Dom
+    	markCurrentLoc(); //Drop that little star where the user is
     };
 
     var getNearbyAtm = function(){
     	var chaseUrl = 'https://m.chase.com/PSRWeb/location/list.action?lat=' + lat + '&lng=' + lng;
-    	$http({method: 'GET', url: chaseUrl}).success(markAtms).error(function(data){console.log("We have an error")});
+    	$http({method: 'GET', url: chaseUrl}).success(markAtms).error(function(data){console.log("We have an error")}); //Error: User could put in his/her address and use that to make call. Browser can return bad values
     };
 
     var markAtms = function(atmData){
@@ -82,11 +79,11 @@
     };
 
     var markCurrentLoc = function(){
-    	var currentLoc = new google.maps.LatLng(lat, lng);
+    	var currentLoc = new google.maps.LatLng(lat, lng); //I could move this up and scope it to the whole controller
     	var marker = new google.maps.Marker({
 	      position: currentLoc,
 	      map: googleMap,
-	      icon: 'http://maps.google.com/mapfiles/kml/pal4/icon47.png'
+	      icon: 'http://maps.google.com/mapfiles/kml/pal4/icon47.png' //Cool little star
 		  });
     };
 
@@ -102,12 +99,12 @@
 		
 		var buildMap = function(){
       var latlng = new google.maps.LatLng(lat, lng);
-      googleMap = new google.maps.Map(document.getElementById("map_canvas"), //defines googleMap here which is availabel to the rest of the app
+      googleMap = new google.maps.Map(document.getElementById("map_canvas"), //defines googleMap here which is availabel to the rest of the controller
             mapOptions(latlng));
 		};
 		
 		var showError = function(error){
-			alert("There is an error: " + error)
+			alert("There is an error: ") //prompt user to put in address,
 		};
 
 		var getLocation = function(){
@@ -120,7 +117,7 @@
 		}();
 
 
-		/////////STYLES BELOW
+		/////////MAP STYLING JSON BELOW
 		var mapStyles = function(){
 
 			var styles = [
@@ -241,10 +238,7 @@
 				        ]
 				    }
 				];
-
 				return styles;
-			////////
-
 		}
 	}]);
 })();

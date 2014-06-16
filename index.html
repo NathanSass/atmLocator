@@ -11,7 +11,6 @@
 	</head>
 	
 	<body ng-controller="AppController" class="center">
-		<!-- <div class="content-container"> -->
 			<header>
 				<h1>Atm Finder</h1>
 			</header>
@@ -19,25 +18,26 @@
 
 			<section class="center" ng-show="clickedMarker">
 						<div class="left">
-							{{bank}} {{locType}}<br> 
-							{{label}}<br>
-							{{address}}., {{city}} {{zip}}<br>
-							{{phone}}<br>
+							{{bankData.bank}} {{bankData.locType}}<br> 
+							{{bankData.label}}<br>
+							{{bankData.address}}., {{bankData.city}} {{bankData.zip}}<br>
+							{{bankData.phone}}<br>
 						</div>
 						<div class="right">
+							
 							<ul>
-								<li>Monday: {{lobbyHrs[0]}}</li>
-								<li>Tuesday: {{lobbyHrs[1]}}</li>
-								<li>Wednesday: {{lobbyHrs[2]}}</li>
-								<li>Thursday: {{lobbyHrs[3]}}</li>
-								<li>Friday: {{lobbyHrs[4]}}</li>
-								<li>Saturday: {{lobbyHrs[5]}}</li>
-								<li>Sunday: {{lobbyHrs[6]}}</li>
+								<li><span>Monday:</span> {{lobbyHrs[0]}}</li>
+								<li><span>Tuesday:</span>  {{lobbyHrs[1]}}</li>
+								<li><span>Wednesday:</span> {{lobbyHrs[2]}}</li>
+								<li><span>Thursday:</span>  {{lobbyHrs[3]}}</li>
+								<li><span>Friday:</span> {{lobbyHrs[4]}}</li>
+								<li><span>Saturday:</span> {{lobbyHrs[5]}}</li>
+								<li><span>Sunday:</span> {{lobbyHrs[6]}}</li>
 							</ul>
 						</div>
-			
 			</section>
+
 			<div id="map_canvas" class="center"></div>
-		<!-- </div> -->
+
 	</body>
 </html>
