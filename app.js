@@ -62,6 +62,8 @@
     	getNearbyAtm();
     	buildMap();
     	//drop a marker on current location
+    	// debugger
+    	markCurrentLoc();
     };
 
     var getNearbyAtm = function(){
@@ -78,12 +80,20 @@
     	}
     };
 
+    var markCurrentLoc = function(){
+    	var currentLoc = new google.maps.LatLng(lat, lng);
+    	var marker = new google.maps.Marker({
+	      position: currentLoc,
+	      map: googleMap,
+	      icon: 'http://maps.google.com/mapfiles/kml/pal4/icon47.png'
+		  });
+    };
+
     var buildMarker = function(lat, lng, index){
     	var atmLocation = new google.maps.LatLng(lat, lng)
     	var marker = new google.maps.Marker({
 	      position: atmLocation,
-	      map: googleMap,
-	      title: 'Hello World!'
+	      map: googleMap
 		  });
 		  google.maps.event.addListener(marker, 'click', function(){setAtmView(index)})
     };
