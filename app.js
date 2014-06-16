@@ -50,7 +50,7 @@
 		var formatHours = function(branchType, atmHours){
 			var hours = [];
 			if(branchType === "atm"){
-				hours  = ["24 hours", "24 hours", "24 hours", "24 hours", "24 hours", "24 hours", "24 hours"]
+				hours  = ["24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours", "24 Hours"]
 			}else{
 
 				hours = addClosed(atmHours)
@@ -59,10 +59,15 @@
 		};
 
 		var addClosed = function(atmHours){
+			var withClosed = [];
 			for(var i = 0; i < atmHours.length; i++){
-				
+				if(atmHours[i].length === 0){
+					withClosed.push("CLOSED")
+				}else{
+					withClosed.push(atmHours[i])
+				}
 			}
-
+			return withClosed;
 		}
 
 		var mapOptions = function(currentLocation){
