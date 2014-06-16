@@ -30,7 +30,7 @@
 				
 				$scope.address = coolData[newAtm].address;
 				$scope.label = coolData[newAtm].label;
-				var lobbyHrs = coolData[newAtm].bank == "atm" ? createDate() : coolData[newAtm].lobbyHrs
+				// var lobbyHrs = coolData[newAtm].bank == "atm" ? createDate() : coolData[newAtm].lobbyHrs
 				//Fields to add
 				$scope.bank = coolData[newAtm].bank
 				$scope.zip = coolData[newAtm].zip
@@ -39,7 +39,7 @@
 				$scope.zip = coolData[newAtm].zip
 				$scope.locType = coolData[newAtm].locType
 				
-				$scope.lobbyHrs = lobbyHrs;
+				$scope.lobbyHrs = coolData[newAtm].lobbyHrs;
 				
 				//
 				$scope.clickedMarker = true;
