@@ -25,7 +25,7 @@
 
 		var setAtmView = function(newAtm){
 			// debugger
-			console.log(coolData)
+			// console.log(coolData[newAtm])
 			$scope.$apply(function(){ //The googleMaps was unbounding $scope, the $apply was needed here
 				
 				$scope.address = coolData[newAtm].address;
@@ -39,13 +39,31 @@
 				$scope.zip = coolData[newAtm].zip
 				$scope.locType = coolData[newAtm].locType
 				
-				$scope.lobbyHrs = coolData[newAtm].lobbyHrs;
+				$scope.lobbyHrs = formatHours(coolData[newAtm].locType, coolData[newAtm].lobbyHrs);
 				
 				//
 				$scope.clickedMarker = true;
 				
 			})
 		};
+
+		var formatHours = function(branchType, atmHours){
+			var hours = [];
+			if(branchType === "atm"){
+				hours  = ["24 hours", "24 hours", "24 hours", "24 hours", "24 hours", "24 hours", "24 hours"]
+			}else{
+
+				hours = addClosed(atmHours)
+			}
+			return hours
+		};
+
+		var addClosed = function(atmHours){
+			for(var i = 0; i < atmHours.length; i++){
+				
+			}
+
+		}
 
 		var mapOptions = function(currentLocation){
 			return{
