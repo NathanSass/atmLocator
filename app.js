@@ -1,6 +1,5 @@
 (function(){
 	var app = angular.module('findAtm', []);
-	
 
 	app.controller('AppController', ['$http', '$scope', function($http, $scope){
 		// var CoolApp = this;
@@ -31,7 +30,7 @@
 				
 				$scope.address = coolData[newAtm].address;
 				$scope.label = coolData[newAtm].label;
-
+				var lobbyHrs = coolData[newAtm].bank == "atm" ? createDate() : coolData[newAtm].lobbyHrs
 				//Fields to add
 				$scope.bank = coolData[newAtm].bank
 				$scope.zip = coolData[newAtm].zip
@@ -39,7 +38,9 @@
 				$scope.state = coolData[newAtm].state
 				$scope.zip = coolData[newAtm].zip
 				$scope.locType = coolData[newAtm].locType
-				$scope.lobbyHrs = coolData[newAtm].lobbyHrs
+				
+				$scope.lobbyHrs = lobbyHrs;
+				
 				//
 				$scope.clickedMarker = true;
 				
