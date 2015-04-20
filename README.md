@@ -3,10 +3,9 @@ atmLocator
 Locates Chase banks and Atms using GeoLocation.
 
 ##Hosted on GitHub Pages [Click Here](http://nathansass.github.io/atmLocator/) 
-A locator for JP Morgan Chase Banks.
 
 Technologies
-- AngularJS Frontend Framework
+- AngularJS
 - Google Maps API
 - HTML5 Geolocation
 - JP Morgan Chase API
